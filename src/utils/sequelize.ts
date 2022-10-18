@@ -1,4 +1,4 @@
-import { Sequelize, Op } from 'sequelize';
+import { Sequelize } from 'sequelize';
 import Logger from './Logger';
 
 const dbUser = process.env.DB_USER as string;
@@ -22,8 +22,19 @@ export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
   },
 });
 
-sequelize.sync({ alter: true }).then(() => {
-  Logger.info(`Database & tables created here!`);
+import User from '../models/UserModel';
+import Allergy from '../models/AllergyModel';
+import Vaccine from '../models/VaccineModel';
+import VaccineAllergy from '../models/VaccineAllergyModel';
+
+// Use this, if relationship is many to many
+// Vaccine.belongsToMany(Allergy, { through: VaccineAllergy, foreignKey: 'allergy_id' });
+// Allergy.belongsToMany(Vaccine, { through: VaccineAllergy, foreignKey: 'vaccine_id' });
+
+Vaccine.hasMany(Allergy, { foreignKey: 'vaccine_id', onDelete: 'CASCADE' });
+
+sequelize.sync({ force: false, alter: true }).then(() => {
+  Logger.info(`Database sync successfully`);
 });
 
-export { Sequelize };
+export { Sequelize, User, Vaccine, Allergy, VaccineAllergy };
