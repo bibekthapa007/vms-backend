@@ -4,6 +4,7 @@ import http from 'http';
 import morgan from 'morgan';
 import Logger from './utils/Logger';
 import { sequelize } from './utils/sequelize';
+import ApiRoute from './routes/apiRoute';
 
 const app = express();
 const server = http.createServer(app);
@@ -13,7 +14,8 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(morgan('dev'));
 
-app.get('/', (req, res) => res.status(200).send('<h1>Vaccine Management App Api</h1>'));
+app.get('/', (req, res) => res.status(200).send('<h1>Vaccine Management App</h1>'));
+app.use('/api', ApiRoute);
 
 const port = process.env.port;
 server.listen(port, () => {
