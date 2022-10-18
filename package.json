@@ -1,0 +1,23 @@
+{
+  "name": "vms-backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "ts-node-dev --respawn src/index.ts",
+    "dev": "nodemon --exec ts-node src/index.ts",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^4.8.4"
+  },
+  "dependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.0",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2"
+  }
+}
