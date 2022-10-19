@@ -5,6 +5,7 @@ import morgan from 'morgan';
 import Logger from './utils/Logger';
 import { sequelize } from './utils/sequelize';
 import ApiRoute from './routes/apiRoute';
+import { errorHandler } from './middlewares/errorhandler';
 
 const app = express();
 const server = http.createServer(app);
@@ -16,6 +17,7 @@ app.use(morgan('dev'));
 
 app.get('/', (req, res) => res.status(200).send('<h1>Vaccine Management App</h1>'));
 app.use('/api', ApiRoute);
+app.use(errorHandler);
 
 const port = process.env.port;
 server.listen(port, () => {
@@ -30,3 +32,11 @@ sequelize
   .catch((error) => {
     Logger.error('Unable to connect to the database:', error);
   });
+
+process.on('uncaughtException', (error) => {
+  Logger.error('uncaughtException', error);
+});
+
+process.on('unhandledRejection', (error) => {
+  Logger.error('unhandledRejection', error);
+});
