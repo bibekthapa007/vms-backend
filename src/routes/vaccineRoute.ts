@@ -11,4 +11,6 @@ router
   .put(vaccineController.updateVaccine)
   .delete(vaccineController.deleteVaccine);
 
+router.route('/:vaccine_id/mandatory').post(vaccineController.markMandatory);
+
 export default router;
