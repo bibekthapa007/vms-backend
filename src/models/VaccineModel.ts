@@ -9,6 +9,7 @@ class Vaccine extends Model {
   declare description: string;
   declare no_of_doses: string;
   declare is_mandatory: boolean;
+  declare image_link: string;
 
   declare vaccine_allergies: NonAttribute<Allergy[]>;
 }
@@ -39,6 +40,10 @@ Vaccine.init(
     is_mandatory: {
       type: DataTypes.BOOLEAN(),
       defaultValue: false,
+    },
+    image_link: {
+      type: DataTypes.STRING(255),
+      allowNull: true,
     },
   },
   {

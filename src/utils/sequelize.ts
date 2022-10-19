@@ -14,11 +14,12 @@ export const sequelize = new Sequelize(dbName, dbUser, dbPass, {
     collate: 'utf8_general_ci',
     timestamps: false,
     freezeTableName: true,
-    // pool: {
-    //   max: 5,
-    //   min: 0,
-    //   idle: 10000,
-    // },
+    // @ts-ignore
+    pool: {
+      max: 5,
+      min: 0,
+      idle: 10000,
+    },
   },
 });
 

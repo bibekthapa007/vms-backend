@@ -6,7 +6,6 @@ class User extends Model {
   declare id: number;
   declare name: string;
   declare email: string;
-  declare image_link: string;
   declare verified: boolean;
   declare password: string;
   declare created_at: Date;
@@ -41,10 +40,6 @@ User.init(
       type: DataTypes.INTEGER(1 as NumberDataTypeOptions),
       allowNull: false,
       defaultValue: 0,
-    },
-    image_link: {
-      type: DataTypes.STRING(255),
-      allowNull: true,
     },
     password: {
       type: DataTypes.STRING(255),
