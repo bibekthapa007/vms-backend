@@ -2,6 +2,9 @@ import 'dotenv/config';
 import express from 'express';
 import http from 'http';
 import morgan from 'morgan';
+import cors from 'cors';
+import helmet from 'helmet';
+
 import Logger from './utils/Logger';
 import { sequelize } from './utils/sequelize';
 import ApiRoute from './routes/apiRoute';
@@ -13,6 +16,13 @@ const server = http.createServer(app);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(helmet());
+app.use(
+  cors({
+    credentials: true,
+  }),
+);
+app.disable('x-powered-by');
 app.use(morgan('dev'));
 
 app.get('/', (req, res) => res.status(200).send('<h1>Vaccine Management App</h1>'));
