@@ -1,10 +1,10 @@
 import BaseError from './error';
 
-class RowNotFoundError extends BaseError {
+class TokenError extends BaseError {
   constructor(message: string) {
     super(message);
-    this.name = 'RowNotFoundError';
+    this.name = 'TokenError';
   }
 }
 
-export default RowNotFoundError;
+export default TokenError;

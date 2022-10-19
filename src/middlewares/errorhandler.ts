@@ -7,6 +7,7 @@ import DatabaseError from '../errors/database';
 import ForbiddenError from '../errors/forbidden';
 import ValidationError from '../errors/validation';
 import NotFoundError from '../errors/notFound';
+import Logger from '../utils/Logger';
 
 function buildError(error: any) {
   if (error instanceof NotFoundError) {
@@ -43,7 +44,7 @@ function buildError(error: any) {
       message: error.message || 'Invalid token',
     };
   }
-
+  Logger.error(error);
   return {
     code: HttpStatus.INTERNAL_SERVER_ERROR,
     message: error.message || 'Something went wrong',

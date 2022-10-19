@@ -1,5 +1,6 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import Joi from 'joi';
+import HttpStatus from 'http-status-codes';
 import NotFoundError from '../errors/notFound';
 import ValidationError from '../errors/validation';
 import Vaccine from '../models/VaccineModel';
@@ -42,7 +43,9 @@ function createVaccine(req: Request, res: Response, next: NextFunction) {
 
   Vaccine.create(value)
     .then((vaccine) => {
-      return res.status(200).send({ message: 'vaccine created successfully.', vaccine });
+      return res
+        .status(HttpStatus.CREATED)
+        .send({ message: 'vaccine created successfully.', vaccine });
     })
     .catch(next);
 }
