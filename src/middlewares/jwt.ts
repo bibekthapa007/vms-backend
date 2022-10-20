@@ -28,6 +28,7 @@ function checkJwt(req: Request, res: Response, next: NextFunction) {
       return next(new TokenError(err.message));
     }
     data = <JwtPayload>data;
+    req.jwtPayload = data;
     if (!(data && data.id)) return res.status(500).send({ message: 'Jwt token not found.' });
     next();
   });

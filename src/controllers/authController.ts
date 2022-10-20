@@ -54,8 +54,6 @@ function signin(req: Request, res: Response, next: NextFunction) {
 
   User.findOne({ where: { email: value.email } })
     .then(async (user) => {
-      console.log('test');
-
       if (!user) {
         return next(new NotFoundError('You have entered an invalid email or password'));
       } else if (!(await user.validPassword(value.password))) {
@@ -63,18 +61,23 @@ function signin(req: Request, res: Response, next: NextFunction) {
       }
       let userData = user.get({ plain: true });
 
-      console.log('test');
-
       const token = createJwtToken({
         id: userData.id,
         email: userData.email,
       });
-
-      console.log(token);
 
       return res.status(200).send({ message: 'Login Successfully', user: userData, token });
     })
     .catch(next);
 }
 
-export default { signup, signin };
+function check(req: Request, res: Response, next: NextFunction) {
+  if (!req.jwtPayload) throw new TokenError('User unauthorized.');
+
+  User.findOne({ where: { id: req.jwtPayload.id } }).then((user) => {
+    if (!user) return res.status(404).send({ message: 'User not found.' });
+    return res.status(200).send({ user, message: 'User is authorized.' });
+  });
+}
+
+export default { signup, signin, check };
