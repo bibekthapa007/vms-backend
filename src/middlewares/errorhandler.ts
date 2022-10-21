@@ -44,7 +44,8 @@ function buildError(error: any) {
       message: error.message || 'Invalid token',
     };
   }
-  Logger.error(error);
+  console.error(error);
+  // Logger.error(error);
   return {
     code: HttpStatus.INTERNAL_SERVER_ERROR,
     message: error.message || 'Something went wrong',

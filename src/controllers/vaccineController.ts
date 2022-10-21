@@ -5,8 +5,6 @@ import NotFoundError from '../errors/notFound';
 import ValidationError from '../errors/validation';
 import Vaccine from '../models/VaccineModel';
 
-const router = Router();
-
 function getVaccineList(req: Request, res: Response, next: NextFunction) {
   Vaccine.findAll()
     .then((vaccines) => {
