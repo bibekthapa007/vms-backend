@@ -4,6 +4,7 @@ import vaccineController from '../controllers/vaccineController';
 const router = Router();
 
 router.route('/').get(vaccineController.getVaccineList).post(vaccineController.createVaccine);
+router.route('/create').post(vaccineController.createVaccine);
 
 router
   .route('/:vaccine_id')

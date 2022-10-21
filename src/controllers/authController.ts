@@ -74,10 +74,12 @@ function signin(req: Request, res: Response, next: NextFunction) {
 function check(req: Request, res: Response, next: NextFunction) {
   if (!req.jwtPayload) throw new TokenError('User unauthorized.');
 
-  User.findOne({ where: { id: req.jwtPayload.id } }).then((user) => {
-    if (!user) return res.status(404).send({ message: 'User not found.' });
-    return res.status(200).send({ user, message: 'User is authorized.' });
-  });
+  User.findOne({ where: { id: req.jwtPayload.id } })
+    .then((user) => {
+      if (!user) return res.status(404).send({ message: 'User not found.' });
+      return res.status(200).send({ user, message: 'User is authorized.' });
+    })
+    .catch(next);
 }
 
 export default { signup, signin, check };

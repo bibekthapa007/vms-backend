@@ -33,10 +33,9 @@ function getVaccineById(req: Request, res: Response, next: NextFunction) {
 
 function createVaccine(req: Request, res: Response, next: NextFunction) {
   let { error, value } = Joi.object({
-    id: Joi.number(),
-    code: Joi.string().required(),
     name: Joi.string().required(),
-    province_id: Joi.number().required(),
+    description: Joi.string().required(),
+    no_of_doses: Joi.number().required(),
   }).validate(req.body);
 
   if (error) throw new ValidationError(error.details[0].message);
@@ -54,9 +53,11 @@ function updateVaccine(req: Request, res: Response, next: NextFunction) {
   const vaccine_id = req.params.vaccine_id;
   let { error, value } = Joi.object({
     id: Joi.number().required(),
-    code: Joi.string(),
     name: Joi.string(),
-    province_id: Joi.number(),
+    description: Joi.string(),
+    no_of_doses: Joi.number(),
+    is_mandatory: Joi.boolean(),
+    image_link: Joi.string().allow(null),
   }).validate({ ...req.body, id: vaccine_id });
 
   if (error) throw new ValidationError(error.details[0].message);
@@ -65,8 +66,9 @@ function updateVaccine(req: Request, res: Response, next: NextFunction) {
     .then((vaccine) => {
       if (!vaccine) throw new NotFoundError('vaccine not found');
       Vaccine.update(value, { where: { id: value.id }, returning: true })
-        .then(([affected_rows]) => {
-          return res.status(200).send({ message: 'vaccine updated successfully.', affected_rows });
+        .then(([affected_rows]) => Vaccine.findOne({ where: { id: value.id } }))
+        .then((vaccine) => {
+          return res.status(200).send({ message: 'vaccine updated successfully.', vaccine });
         })
         .catch(next);
     })
