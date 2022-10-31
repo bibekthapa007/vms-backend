@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import { checkJwt } from '../middlewares/jwt';
-import AuthRoute from '../routes/authRoute';
-import VaccineRoute from '../routes/vaccineRoute';
+import { checkJwt } from 'src/middlewares/jwt';
+import AuthRoute from 'src/routes/authRoute';
+import VaccineRoute from 'src/routes/vaccineRoute';
 
 const router = Router();
 
